@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hebrew Impostor Detection — Project Proposal</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rubik:wght@500;700&family=Heebo:wght@400;500;700&display=swap">
+<style>
+*{box-sizing:border-box;margin:0}
+body{background:#0f1113;padding:24px 0;font-family:Heebo,Arial,sans-serif}
+.frame{margin:0 auto 24px;overflow:hidden;box-shadow:0 8px 24px rgba(0,0,0,.35)}
+section{width:1920px;height:1080px;position:relative;overflow:hidden;transform-origin:0 0}
+aside{display:none}
+table{border-spacing:0}
+@media print{
+  @page{size:1920px 1080px;margin:0}
+  body{background:none;padding:0}
+  .frame{margin:0;box-shadow:none;width:1920px!important;height:1080px!important;page-break-after:always}
+  section{transform:none!important}
+}
+</style>
+</head>
+<body>
+<!-- Exported from the Claude Slides artifact. Speaker notes are kept in each slide's hidden <aside>. -->
+<div class="frame"><section id="cover" data-transition="fade" style="background:#1B1F24;color:#ECE9E2;font-family:Heebo, Arial, sans-serif;padding:128px;display:flex;flex-direction:row;align-items:center;gap:96px">
+<div style="flex:1;display:flex;flex-direction:column;gap:40px">
+<h1 style="font-family:Rubik, Arial, sans-serif;font-size:104px;font-weight:700;line-height:1.02;letter-spacing:-2px">Hebrew Impostor Detection</h1>
+<p style="font-size:36px;line-height:1.35;color:#C9CCCF">Spotting LLM-written posts that pose as Israelis on Hebrew social media</p>
+<div style="display:flex;flex-direction:column;gap:12px;padding-top:56px">
+<p style="font-size:32px;font-weight:500">Ido Brenner · Oren Yehezkel</p>
+<p style="font-size:24px;color:#A7ABB0">Project proposal · Large Language Models and Their Applications · Bar-Ilan University</p>
+</div>
+</div>
+<div style="position:relative;width:640px;height:600px">
+<div style="position:absolute;left:0;top:96px;width:560px;display:flex;flex-direction:column;gap:20px;background:#262A30;border:1px solid #363A41;border-radius:20px;padding:40px">
+<div style="display:flex;flex-direction:row;align-items:center;justify-content:flex-end;gap:20px">
+<div style="display:flex;flex-direction:column;gap:4px">
+<p dir="rtl" style="font-size:28px;font-weight:700;text-align:right">דני מתל אביב</p>
+<p dir="rtl" style="font-size:24px;color:#A7ABB0;text-align:right">לפני 3 שעות</p>
+</div>
+<div style="width:64px;height:64px;background:#4A4F57;border-radius:50%;flex-shrink:0"></div>
+</div>
+<p dir="rtl" style="font-size:34px;line-height:1.45;text-align:right">עוד שבוע של מחירים מטורפים, ואף אחד למעלה לא באמת מקשיב לנו</p>
+</div>
+<svg aria-label="Magnifying glass examining the post" style="position:absolute;left:380px;top:0px" width="260" height="260" viewBox="0 0 260 260"><circle cx="110" cy="110" r="84" fill="none" stroke="#E0602F" stroke-width="10"/><line x1="172" y1="172" x2="236" y2="236" stroke="#E0602F" stroke-width="18" stroke-linecap="round"/></svg>
+<p style="position:absolute;left:0;top:500px;width:600px;font-family:Rubik, Arial, sans-serif;font-size:36px;font-weight:700;color:#E0602F">Impostor or authentic?</p>
+</div>
+<aside>~20 sec. Suggested speaker: Ido (split not agreed yet). Introduce the team and the one-line idea: we detect LLM-written posts that impersonate Israelis on Hebrew social media. The post on the slide is an illustrative mock-up, not real data.</aside>
+</section>
+</div><div class="frame"><section id="usecase" data-transition="fade" style="background:#EEEFEC;color:#1B1F24;font-family:Heebo, Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:56px">
+<h2 style="font-family:Rubik, Arial, sans-serif;font-size:64px;font-weight:700;line-height:1.1;letter-spacing:-1px">Motivating use case</h2>
+<div style="display:flex;flex-direction:row;gap:96px;align-items:flex-start">
+<div style="width:620px;display:flex;flex-direction:column;gap:32px">
+<p style="font-family:Rubik, Arial, sans-serif;font-size:48px;font-weight:500;line-height:1.25">Foreign influence operations run profiles that pose as Israelis.</p>
+<p style="font-family:Rubik, Arial, sans-serif;font-size:48px;font-weight:500;line-height:1.25;color:#B5401A">More and more of what they post is written by LLMs.</p>
+</div>
+<div style="flex:1;display:flex;flex-direction:column">
+<div style="display:flex;flex-direction:column;gap:10px;padding:28px 0;border-top:1px solid #C9CCC6">
+<h3 style="font-family:Rubik, Arial, sans-serif;font-size:32px;font-weight:700">Why it matters</h3>
+<p style="font-size:28px;line-height:1.4;color:#4A5058">Fake “Israeli voices” can steer public discussion on Hebrew social media.</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:10px;padding:28px 0;border-top:1px solid #C9CCC6">
+<h3 style="font-family:Rubik, Arial, sans-serif;font-size:32px;font-weight:700">Why it’s hard</h3>
+<p style="font-size:28px;line-height:1.4;color:#4A5058">LLM text is fluent and on-topic. There is no labeled Hebrew data for this task, and a classifier can learn topic or model style instead of impersonation.</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:10px;padding:28px 0;border-top:1px solid #C9CCC6;border-bottom:1px solid #C9CCC6">
+<h3 style="font-family:Rubik, Arial, sans-serif;font-size:32px;font-weight:700">How it’s handled today</h3>
+<p style="font-size:28px;line-height:1.4;color:#4A5058">Platform moderation and manual investigation. Generic AI-text detectors answer “AI or human?”, not “is this really an Israeli?”.</p>
+</div>
+</div>
+</div>
+<div style="position:absolute;left:128px;bottom:64px;width:1664px;display:flex;flex-direction:row;justify-content:space-between">
+<p style="font-size:24px;color:#5A6068">Hebrew Impostor Detection · Proposal</p>
+<p style="font-size:24px;color:#5A6068">1 / 5</p>
+</div>
+<aside>~1 min. Suggested speaker: Ido. Background: influence operations use fake Israeli profiles; LLMs make producing that content cheap and fluent. Why it matters: these profiles shape discussion. Why it is hard: fluent text, no labeled Hebrew data, and the risk of shortcut learning. Today: moderation and manual investigation; general AI-text detection does not target impersonation. NOTE: the "today" line is general background, not from our docs; we still need to back it with sources (related work is due for the interim).</aside>
+</section>
+</div><div class="frame"><section id="task" data-transition="fade" style="background:#EEEFEC;color:#1B1F24;font-family:Heebo, Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:56px">
+<h2 style="font-family:Rubik, Arial, sans-serif;font-size:64px;font-weight:700;line-height:1.1;letter-spacing:-1px">Task description</h2>
+<div style="display:flex;flex-direction:row;gap:96px;align-items:flex-start">
+<div style="flex:1;display:flex;flex-direction:column;gap:28px">
+<p style="font-family:Rubik, Arial, sans-serif;font-size:40px;font-weight:500;line-height:1.3">Binary classification: given <i>x</i>, predict <i>y</i> ∈ {<span style="color:#B5401A">impostor</span>, authentic}</p>
+<p style="font-size:24px;font-weight:700;color:#5A6068;padding-top:16px">Post level</p>
+<div style="display:flex;flex-direction:row;align-items:center;gap:16px">
+<p style="width:300px;font-size:26px;line-height:1.3;background:#F8F8F5;border:1px solid #C9CCC6;border-radius:12px;padding:24px 28px">One post</p>
+<svg class="xc" style="width:48px;color:#1B1F24;height:24px;flex-shrink:0" viewBox="0 0 48 24" preserveAspectRatio="none" aria-hidden="true"><line x1="2" y1="12" x2="36" y2="12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><path d="M34 5 L47 12 L34 19 Z" fill="currentColor"/></svg>
+<p style="width:210px;font-size:26px;font-weight:700;background:#1B1F24;color:#ECE9E2;border-radius:12px;padding:24px 28px">Classifier</p>
+<svg class="xc" style="width:48px;color:#1B1F24;height:24px;flex-shrink:0" viewBox="0 0 48 24" preserveAspectRatio="none" aria-hidden="true"><line x1="2" y1="12" x2="36" y2="12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><path d="M34 5 L47 12 L34 19 Z" fill="currentColor"/></svg>
+<p style="width:300px;font-size:26px;line-height:1.3;background:#F8F8F5;border:1px solid #C9CCC6;border-radius:12px;padding:24px 28px">impostor / authentic</p>
+</div>
+<p style="font-size:24px;font-weight:700;color:#5A6068;padding-top:16px">Account level</p>
+<div style="display:flex;flex-direction:row;align-items:center;gap:16px">
+<p style="width:300px;font-size:26px;line-height:1.3;background:#F8F8F5;border:1px solid #C9CCC6;border-radius:12px;padding:24px 28px">An account’s posts p₁ … pₙ</p>
+<svg class="xc" style="width:48px;color:#1B1F24;height:24px;flex-shrink:0" viewBox="0 0 48 24" preserveAspectRatio="none" aria-hidden="true"><line x1="2" y1="12" x2="36" y2="12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><path d="M34 5 L47 12 L34 19 Z" fill="currentColor"/></svg>
+<p style="width:210px;font-size:26px;font-weight:700;background:#1B1F24;color:#ECE9E2;border-radius:12px;padding:24px 28px">Classifier</p>
+<svg class="xc" style="width:48px;color:#1B1F24;height:24px;flex-shrink:0" viewBox="0 0 48 24" preserveAspectRatio="none" aria-hidden="true"><line x1="2" y1="12" x2="36" y2="12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><path d="M34 5 L47 12 L34 19 Z" fill="currentColor"/></svg>
+<p style="width:300px;font-size:26px;line-height:1.3;background:#F8F8F5;border:1px solid #C9CCC6;border-radius:12px;padding:24px 28px">impostor / authentic</p>
+</div>
+<p style="font-size:24px;color:#4A5058">Account definition (n, how synthetic accounts are composed): <b style="color:#B5401A">TBD</b></p>
+</div>
+<div style="width:540px;display:flex;flex-direction:column">
+<h3 style="font-family:Rubik, Arial, sans-serif;font-size:32px;font-weight:700;padding-bottom:20px">What’s new</h3>
+<div style="display:flex;flex-direction:column;gap:8px;padding:24px 0;border-top:1px solid #C9CCC6">
+<p style="font-size:28px;font-weight:700">Hebrew</p>
+<p style="font-size:26px;line-height:1.4;color:#4A5058">Hebrew social-media posts and Hebrew models</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:8px;padding:24px 0;border-top:1px solid #C9CCC6">
+<p style="font-size:28px;font-weight:700">Impersonation, not just “AI text”</p>
+<p style="font-size:26px;line-height:1.4;color:#4A5058">LLM content written as if by an Israeli</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:8px;padding:24px 0;border-top:1px solid #C9CCC6;border-bottom:1px solid #C9CCC6">
+<p style="font-size:28px;font-weight:700;color:#B5401A">Cross-generator generalization</p>
+<p style="font-size:26px;line-height:1.4;color:#4A5058">Does a detector trained on one LLM’s posts catch another LLM’s?</p>
+</div>
+</div>
+</div>
+<div style="position:absolute;left:128px;bottom:64px;width:1664px;display:flex;flex-direction:row;justify-content:space-between">
+<p style="font-size:24px;color:#5A6068">Hebrew Impostor Detection · Proposal</p>
+<p style="font-size:24px;color:#5A6068">2 / 5</p>
+</div>
+<aside>~1 min. Suggested speaker: Ido. Formal task: binary classification, impostor vs. authentic, at two levels: a single post, and an account = a collection of posts. How many posts make an account, and how synthetic accounts are built, is still open. Novelty: Hebrew; impersonation rather than generic AI-text detection; and the central research question, cross-generator generalization.</aside>
+</section>
+</div><div class="frame"><section id="methods" data-transition="fade" style="background:#EEEFEC;color:#1B1F24;font-family:Heebo, Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:56px">
+<h2 style="font-family:Rubik, Arial, sans-serif;font-size:64px;font-weight:700;line-height:1.1;letter-spacing:-1px">Models &amp; methods</h2>
+<div style="display:flex;flex-direction:row;align-items:center;gap:16px">
+<div style="width:350px;display:flex;flex-direction:column;gap:10px;background:#F8F8F5;border:1px solid #C9CCC6;border-radius:14px;padding:28px">
+<h3 style="font-family:Rubik, Arial, sans-serif;font-size:28px;font-weight:700">Generate &amp; collect</h3>
+<p style="font-size:24px;line-height:1.35;color:#4A5058">LLMs write posts from Israeli personas; real posts collected</p>
+</div>
+<svg class="xc" style="width:48px;color:#1B1F24;height:24px;flex-shrink:0" viewBox="0 0 48 24" preserveAspectRatio="none" aria-hidden="true"><line x1="2" y1="12" x2="36" y2="12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><path d="M34 5 L47 12 L34 19 Z" fill="currentColor"/></svg>
+<div style="width:350px;display:flex;flex-direction:column;gap:10px;background:#F8F8F5;border:1px solid #C9CCC6;border-radius:14px;padding:28px">
+<h3 style="font-family:Rubik, Arial, sans-serif;font-size:28px;font-weight:700">Match topics</h3>
+<p style="font-size:24px;line-height:1.35;color:#4A5058">Same topics in both classes, against shortcut learning</p>
+</div>
+<svg class="xc" style="width:48px;color:#1B1F24;height:24px;flex-shrink:0" viewBox="0 0 48 24" preserveAspectRatio="none" aria-hidden="true"><line x1="2" y1="12" x2="36" y2="12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><path d="M34 5 L47 12 L34 19 Z" fill="currentColor"/></svg>
+<div style="width:350px;display:flex;flex-direction:column;gap:10px;background:#1B1F24;color:#ECE9E2;border-radius:14px;padding:28px">
+<h3 style="font-family:Rubik, Arial, sans-serif;font-size:28px;font-weight:700">Train &amp; prompt</h3>
+<p style="font-size:24px;line-height:1.35;color:#C9CCCF">Four methods on the same data</p>
+</div>
+<svg class="xc" style="width:48px;color:#1B1F24;height:24px;flex-shrink:0" viewBox="0 0 48 24" preserveAspectRatio="none" aria-hidden="true"><line x1="2" y1="12" x2="36" y2="12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><path d="M34 5 L47 12 L34 19 Z" fill="currentColor"/></svg>
+<div style="width:350px;display:flex;flex-direction:column;gap:10px;background:#F8F8F5;border:1px solid #C9CCC6;border-radius:14px;padding:28px">
+<h3 style="font-family:Rubik, Arial, sans-serif;font-size:28px;font-weight:700">Evaluate</h3>
+<p style="font-size:24px;line-height:1.35;color:#4A5058">Post and account level, across generators</p>
+</div>
+</div>
+<div style="display:flex;flex-direction:row;gap:96px;align-items:flex-start">
+<div style="flex:1;display:flex;flex-direction:column">
+<h3 style="font-family:Rubik, Arial, sans-serif;font-size:32px;font-weight:700;padding-bottom:16px">Trained on our data</h3>
+<div style="display:flex;flex-direction:row;justify-content:space-between;gap:24px;padding:20px 0;border-top:1px solid #C9CCC6">
+<p style="font-size:28px;font-weight:700">TF-IDF + logistic regression</p>
+<p style="font-size:26px;color:#4A5058">Baseline</p>
+</div>
+<div style="display:flex;flex-direction:row;justify-content:space-between;gap:24px;padding:20px 0;border-top:1px solid #C9CCC6">
+<p style="font-size:28px;font-weight:700">DictaBERT / AlephBERT</p>
+<p style="font-size:26px;color:#4A5058">Fine-tuned Hebrew encoders</p>
+</div>
+<div style="display:flex;flex-direction:row;justify-content:space-between;gap:24px;padding:20px 0;border-top:1px solid #C9CCC6;border-bottom:1px solid #C9CCC6">
+<p style="font-size:28px;font-weight:700">LoRA on a small LLM</p>
+<p style="font-size:26px;color:#4A5058">Fine-tuned · model <b style="color:#B5401A">TBD</b></p>
+</div>
+</div>
+<div style="width:560px;display:flex;flex-direction:column">
+<h3 style="font-family:Rubik, Arial, sans-serif;font-size:32px;font-weight:700;padding-bottom:16px">Off-the-shelf</h3>
+<div style="display:flex;flex-direction:column;gap:8px;padding:20px 0;border-top:1px solid #C9CCC6;border-bottom:1px solid #C9CCC6">
+<p style="font-size:28px;font-weight:700">LLM zero-shot / few-shot</p>
+<p style="font-size:26px;color:#4A5058">No training · model <b style="color:#B5401A">TBD</b></p>
+</div>
+</div>
+</div>
+<div style="position:absolute;left:128px;bottom:64px;width:1664px;display:flex;flex-direction:row;justify-content:space-between">
+<p style="font-size:24px;color:#5A6068">Hebrew Impostor Detection · Proposal</p>
+<p style="font-size:24px;color:#5A6068">3 / 5</p>
+</div>
+<aside>~1 min. Suggested speaker: Oren. Pipeline end to end: generate impostor posts with several LLMs and Israeli personas and collect authentic posts; match topics between the classes; train or prompt four methods on the same data; evaluate at post and account level and across generators. Methods: three trained on our data (TF-IDF + LR baseline, fine-tuned DictaBERT/AlephBERT, LoRA on a small LLM) vs. one off-the-shelf (LLM zero-shot / few-shot). Specific LLMs for LoRA and for zero/few-shot are not chosen yet.</aside>
+</section>
+</div><div class="frame"><section id="data" data-transition="fade" style="background:#EEEFEC;color:#1B1F24;font-family:Heebo, Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:40px">
+<h2 style="font-family:Rubik, Arial, sans-serif;font-size:64px;font-weight:700;line-height:1.1;letter-spacing:-1px">Data</h2>
+<div style="display:flex;flex-direction:row;gap:96px;align-items:flex-start">
+<div style="flex:1;display:flex;flex-direction:column">
+<h3 style="font-family:Rubik, Arial, sans-serif;font-size:36px;font-weight:700;color:#B5401A;padding-bottom:12px">Impostor class · synthetic</h3>
+<div style="display:flex;flex-direction:column;gap:4px;padding:12px 0;border-top:1px solid #C9CCC6">
+<p style="font-size:24px;font-weight:700;color:#5A6068">What</p>
+<p style="font-size:28px;line-height:1.35">Posts written by LLMs prompted with Israeli personas</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:4px;padding:12px 0;border-top:1px solid #C9CCC6">
+<p style="font-size:24px;font-weight:700;color:#5A6068">Generators</p>
+<p style="font-size:28px;line-height:1.35">Several LLMs. Which ones, and which are held out: <b style="color:#B5401A">TBD</b></p>
+</div>
+<div style="display:flex;flex-direction:column;gap:4px;padding:12px 0;border-top:1px solid #C9CCC6;border-bottom:1px solid #C9CCC6">
+<p style="font-size:24px;font-weight:700;color:#5A6068">Optional extension</p>
+<p style="font-size:28px;line-height:1.35">Machine-translated Hebrew from Arabic, Persian or English posts. In v1: <b style="color:#B5401A">TBD</b></p>
+</div>
+</div>
+<div style="flex:1;display:flex;flex-direction:column">
+<h3 style="font-family:Rubik, Arial, sans-serif;font-size:36px;font-weight:700;padding-bottom:12px">Authentic class · real</h3>
+<div style="display:flex;flex-direction:column;gap:4px;padding:12px 0;border-top:1px solid #C9CCC6">
+<p style="font-size:24px;font-weight:700;color:#5A6068">What</p>
+<p style="font-size:28px;line-height:1.35">Real posts by Israelis</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:4px;padding:12px 0;border-top:1px solid #C9CCC6">
+<p style="font-size:24px;font-weight:700;color:#5A6068">Source</p>
+<p style="font-size:28px;line-height:1.35">An existing dataset if one exists, else manual collection by Ido and Oren: <b style="color:#B5401A">TBD</b></p>
+</div>
+<div style="display:flex;flex-direction:column;gap:4px;padding:12px 0;border-top:1px solid #C9CCC6;border-bottom:1px solid #C9CCC6">
+<p style="font-size:24px;font-weight:700;color:#5A6068">Recorded per post</p>
+<p style="font-size:28px;line-height:1.35">Source and topic</p>
+</div>
+</div>
+</div>
+<div style="display:flex;flex-direction:row;gap:56px;background:#1B1F24;color:#ECE9E2;border-radius:16px;padding:24px 40px">
+<div style="flex:1;display:flex;flex-direction:column;gap:6px">
+<p style="font-size:28px;font-weight:700">Labels</p>
+<p style="font-size:24px;line-height:1.35;color:#C9CCCF">Known by construction: no manual class labeling</p>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;gap:6px">
+<p style="font-size:28px;font-weight:700;color:#E0602F">Topic matching</p>
+<p style="font-size:24px;line-height:1.35;color:#C9CCCF">Same topics in both classes, so topic can’t give the answer away</p>
+</div>
+</div>
+<div style="position:absolute;left:128px;bottom:64px;width:1664px;display:flex;flex-direction:row;justify-content:space-between">
+<p style="font-size:24px;color:#5A6068">Hebrew Impostor Detection · Proposal</p>
+<p style="font-size:24px;color:#5A6068">4 / 5</p>
+</div>
+<aside>~1 min. Suggested speaker: Oren. Impostor class: synthetic posts from several LLMs with Israeli personas; which generators, and which are held out, is open. Optional extension: machine-translated Hebrew from Arabic, Persian or English; not yet decided for v1. Authentic class: real Israeli posts from an existing dataset if we find one, otherwise collected manually by us; source and topic recorded for every post. Labels come from how each post was produced. Topic matching across classes is our main defense against shortcut learning.</aside>
+</section>
+</div><div class="frame"><section id="metrics" data-transition="fade" style="background:#EEEFEC;color:#1B1F24;font-family:Heebo, Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:56px">
+<h2 style="font-family:Rubik, Arial, sans-serif;font-size:64px;font-weight:700;line-height:1.1;letter-spacing:-1px">Metrics &amp; KPIs</h2>
+<div style="display:flex;flex-direction:row;gap:96px;align-items:flex-start">
+<div style="width:640px;display:flex;flex-direction:column">
+<div style="display:flex;flex-direction:column;gap:6px;padding:22px 0;border-top:1px solid #C9CCC6">
+<p style="font-size:28px;font-weight:700">Classification</p>
+<p style="font-size:26px;line-height:1.35;color:#4A5058">F1 and AUC, at post level and at account level</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:6px;padding:22px 0;border-top:1px solid #C9CCC6">
+<p style="font-size:28px;font-weight:700;color:#B5401A">Cross-generator</p>
+<p style="font-size:26px;line-height:1.35;color:#4A5058">Train on one generator, test on each other one, plus leave-one-generator-out</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:6px;padding:22px 0;border-top:1px solid #C9CCC6">
+<p style="font-size:28px;font-weight:700">Synthetic data quality</p>
+<p style="font-size:26px;line-height:1.35;color:#4A5058">Checked at each stage. Specific measures: <b style="color:#B5401A">TBD</b></p>
+</div>
+<div style="display:flex;flex-direction:column;gap:6px;padding:22px 0;border-top:1px solid #C9CCC6;border-bottom:1px solid #C9CCC6">
+<p style="font-size:28px;font-weight:700">Ground truth</p>
+<p style="font-size:26px;line-height:1.35;color:#4A5058">Known by construction: how a post was produced sets its label</p>
+</div>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;gap:20px">
+<table style="width:928px;font-size:26px;border-collapse:collapse">
+<tr><th style="text-align:left;padding:18px 20px;font-size:24px;color:#5A6068;border-bottom:1px solid #1B1F24">Train ↓ · Test →</th><th style="text-align:center;padding:18px 20px;border-bottom:1px solid #1B1F24">Gen A</th><th style="text-align:center;padding:18px 20px;border-bottom:1px solid #1B1F24">Gen B</th><th style="text-align:center;padding:18px 20px;border-bottom:1px solid #1B1F24">Gen C</th></tr>
+<tr><td style="padding:18px 20px;font-weight:700;border-bottom:1px solid #C9CCC6">Gen A</td><td style="text-align:center;padding:18px 20px;color:#5A6068;border-bottom:1px solid #C9CCC6">in-dist.</td><td style="text-align:center;padding:18px 20px;background:#F2DCD2;border-bottom:1px solid #EEEFEC">cross</td><td style="text-align:center;padding:18px 20px;background:#F2DCD2;border-bottom:1px solid #EEEFEC">cross</td></tr>
+<tr><td style="padding:18px 20px;font-weight:700;border-bottom:1px solid #C9CCC6">Gen B</td><td style="text-align:center;padding:18px 20px;background:#F2DCD2;border-bottom:1px solid #EEEFEC">cross</td><td style="text-align:center;padding:18px 20px;color:#5A6068;border-bottom:1px solid #C9CCC6">in-dist.</td><td style="text-align:center;padding:18px 20px;background:#F2DCD2;border-bottom:1px solid #EEEFEC">cross</td></tr>
+<tr><td style="padding:18px 20px;font-weight:700;border-bottom:1px solid #C9CCC6">Gen C</td><td style="text-align:center;padding:18px 20px;background:#F2DCD2;border-bottom:1px solid #EEEFEC">cross</td><td style="text-align:center;padding:18px 20px;background:#F2DCD2;border-bottom:1px solid #EEEFEC">cross</td><td style="text-align:center;padding:18px 20px;color:#5A6068;border-bottom:1px solid #C9CCC6">in-dist.</td></tr>
+<tr><td style="padding:18px 20px;font-weight:700">All others</td><td style="text-align:center;padding:18px 20px;background:#DCDFD9;color:#1B1F24;font-weight:700">held out</td><td style="text-align:center;padding:18px 20px;background:#DCDFD9;color:#1B1F24;font-weight:700">held out</td><td style="text-align:center;padding:18px 20px;background:#DCDFD9;color:#1B1F24;font-weight:700">held out</td></tr>
+</table>
+<p style="font-size:24px;line-height:1.35;color:#4A5058">Each cell: F1 / AUC. Last row: leave-one-generator-out. Generators A–C are placeholders: models and count <b style="color:#B5401A">TBD</b></p>
+</div>
+</div>
+<div style="position:absolute;left:128px;bottom:64px;width:1664px;display:flex;flex-direction:row;justify-content:space-between">
+<p style="font-size:24px;color:#5A6068">Hebrew Impostor Detection · Proposal</p>
+<p style="font-size:24px;color:#5A6068">5 / 5</p>
+</div>
+<aside>~1 min. Suggested speaker: Ido (or both, to close). Metrics: F1 and AUC at post and account level. The research question is read off the matrix: rows are the generator we train on, columns the one we test on; the diagonal is in-distribution, everything off it is cross-generator, and the last row is leave-one-generator-out. Synthetic data quality is checked at each stage; the exact measures are still open. Ground truth needs no manual labeling: each post's label is known from how it was produced.</aside>
+</section>
+</div><div class="frame"><section id="48e5b80e" data-transition="fade" style="background:#1B1F24;color:#ECE9E2;font-family:Heebo, Arial, sans-serif;padding:128px;display:flex;flex-direction:row;align-items:center;gap:96px">
+<div style="flex:1;display:flex;flex-direction:column;gap:40px">
+<h1 style="font-family:Rubik, Arial, sans-serif;font-size:104px;font-weight:700;line-height:1.02;letter-spacing:-2px">Hebrew Impostor Detection</h1>
+<p style="font-size:36px;line-height:1.35;color:#C9CCCF">Spotting LLM-written posts that pose as Israelis on Hebrew social media</p>
+<div style="display:flex;flex-direction:column;gap:12px;padding-top:56px">
+<p style="font-size:32px;font-weight:500">Ido Brenner · Oren Yehezkel</p>
+<p style="font-size:24px;color:#A7ABB0">Project proposal · Large Language Models and Their Applications · Bar-Ilan University</p>
+</div>
+</div>
+<div style="position:relative;width:640px;height:600px">
+<div style="position:absolute;left:0;top:96px;width:560px;display:flex;flex-direction:column;gap:20px;background:#262A30;border:1px solid #363A41;border-radius:20px;padding:40px">
+<div style="display:flex;flex-direction:row;align-items:center;justify-content:flex-end;gap:20px">
+<div style="display:flex;flex-direction:column;gap:4px">
+<p dir="rtl" style="font-size:28px;font-weight:700;text-align:right">דני מתל אביב</p>
+<p dir="rtl" style="font-size:24px;color:#A7ABB0;text-align:right">לפני 3 שעות</p>
+</div>
+<div style="width:64px;height:64px;background:#4A4F57;border-radius:50%;flex-shrink:0"></div>
+</div>
+<p dir="rtl" style="font-size:34px;line-height:1.45;text-align:right">עוד שבוע של מחירים מטורפים, ואף אחד למעלה לא באמת מקשיב לנו</p>
+</div>
+<svg aria-label="Magnifying glass examining the post" style="position:absolute;left:380px;top:0px" width="260" height="260" viewBox="0 0 260 260"><circle cx="110" cy="110" r="84" fill="none" stroke="#E0602F" stroke-width="10"/><line x1="172" y1="172" x2="236" y2="236" stroke="#E0602F" stroke-width="18" stroke-linecap="round"/></svg>
+<p style="position:absolute;left:0;top:500px;width:600px;font-family:Rubik, Arial, sans-serif;font-size:36px;font-weight:700;color:#E0602F">Impostor or authentic?</p>
+</div>
+<aside>~20 sec. Suggested speaker: Ido (split not agreed yet). Introduce the team and the one-line idea: we detect LLM-written posts that impersonate Israelis on Hebrew social media. The post on the slide is an illustrative mock-up, not real data.</aside>
+</section>
+</div>
+<script>
+function fit(){var w=Math.min(window.innerWidth-48,1920),s=w/1920;
+document.querySelectorAll('.frame').forEach(function(f){f.style.width=w+'px';f.style.height=(1080*s)+'px';f.firstElementChild.style.transform='scale('+s+')';});}
+window.addEventListener('resize',fit);fit();
+</script>
+</body>
+</html>

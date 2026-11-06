@@ -4,6 +4,11 @@ Newest entries on top. Format: `## YYYY-MM-DD — Name — short title`, followe
 
 ---
 
+## 2026-11-06 — Ido — Proposal deck saved to repo
+- Exported the final proposal deck (7 slides: title, 5 content slides, closing slide) to `slides/proposal.html` as a standalone HTML file. Speaker notes are kept in hidden `<aside>` elements.
+- Fixed an unreadable "held out" row in the cross-generator matrix (slide 6) before export.
+- Oren's full name (Oren Yehezkel) is now on the title and closing slides.
+
 ## 2026-11-06 — Ido — Proposal slides
 - Built the proposal deck (title + 5 slides: Motivating Use Case, Task Description, Models & Methods, Data, Metrics & KPIs) as a Claude Slides artifact: https://claude.ai/artifact/SSH5fz5UPxVFSo4gLNzQ6X (private to Ido until shared).
 - Content taken only from `docs/`; open questions marked TBD on the slides (D-011). Speaker notes include a suggested speaker split (not agreed).

@@ -30,4 +30,5 @@ If a decision was discussed but not agreed by both, log it as an open question, 
 
 ## Repo layout
 - `docs/` — project documentation (see above).
+- `slides/` — presentation exports. `slides/proposal.html`: proposal deck (week 5), a standalone HTML export of the Claude Slides artifact; open in a browser, print to PDF for a PDF copy.
 - Code, data and experiment folders will be added as the project grows; record the layout here when they are.
