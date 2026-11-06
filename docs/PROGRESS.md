@@ -4,6 +4,9 @@ Newest entries on top. Format: `## YYYY-MM-DD — Name — short title`, followe
 
 ---
 
+## 2026-11-06 — Ido — Proposal deck PPTX and PDF
+- Added `slides/proposal.pptx` and `slides/proposal.pdf` (7 slides each), exported from the Claude Slides artifact, per the course repo requirement (slides in PPT and PDF format).
+
 ## 2026-11-06 — Ido — Proposal deck saved to repo
 - Exported the final proposal deck (7 slides: title, 5 content slides, closing slide) to `slides/proposal.html` as a standalone HTML file. Speaker notes are kept in hidden `<aside>` elements.
 - Fixed an unreadable "held out" row in the cross-generator matrix (slide 6) before export.
