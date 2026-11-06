@@ -70,3 +70,18 @@ D-001 to D-009 were agreed before the repo was set up and were recorded here on 
 - Status: Active
 - Decision: All decisions and progress are documented in this repo (`docs/`). Both team members' Claude sessions read the docs at the start and update them before ending. See `CLAUDE.md`.
 - Why: Two people, each working with their own Claude; chat history is not shared.
+
+## D-010 — Proposal slides in English
+- Date: 2026-11-06
+- By: Ido
+- Status: Active
+- Decision: The proposal slides are written in English.
+- Why: Matches the course template and course material.
+
+## D-011 — Proposal format and open items
+- Date: 2026-11-06
+- By: Ido
+- Status: Active
+- Decision: Proposal = a title slide plus exactly 5 content slides (course template order), about 5 minutes, presented by Ido and Oren together. Items still in `OPEN_QUESTIONS.md` are shown on the slides as a transparent "TBD", not as proposals.
+- Why: Keeps the slides consistent with what is actually decided in this repo.
+
