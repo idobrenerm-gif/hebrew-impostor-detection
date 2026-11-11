@@ -116,5 +116,5 @@ D-001 to D-009 were agreed before the repo was set up and were recorded here on 
 - Date: 2026-11-11
 - By: Ido
 - Status: Active
-- Decision: All v1 material (docs snapshot, README, CLAUDE.md, proposal deck) is kept in `archive/v1-impostor-detection/` and is not edited. The live logs (`DECISIONS.md`, `PROGRESS.md`, `OPEN_QUESTIONS.md`) continue in `docs/`. The GitHub repo is renamed to `hebrew-prompt-language-detection`.
+- Decision: All v1 material (docs snapshot, README, CLAUDE.md, proposal deck) is kept in `archive/v1-impostor-detection/` and is not edited. The live logs (`DECISIONS.md`, `PROGRESS.md`, `OPEN_QUESTIONS.md`) continue in `docs/`. The GitHub repo is to be renamed to `hebrew-prompt-language-detection` (done by Ido in GitHub settings).
 
