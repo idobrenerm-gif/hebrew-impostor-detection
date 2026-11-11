@@ -1,6 +1,6 @@
 # Instructions for Claude (shared by both team members)
 
-This project is worked on by two people, **Ido** and **Oren**, each with their own Claude.
+This project (repo: `hebrew-prompt-language-detection`) is worked on by two people, **Ido** and **Oren**, each with their own Claude.
 Chat history is NOT shared and NOT a source of truth. **This repository is the single source of truth.**
 
 ## At the start of every session
@@ -30,5 +30,6 @@ If a decision was discussed but not agreed by both, log it as an open question, 
 
 ## Repo layout
 - `docs/` — project documentation (see above).
-- `slides/` — presentation exports. Proposal deck (week 5): `slides/proposal.pptx`, `slides/proposal.pdf` (exported from the Claude Slides artifact) and `slides/proposal.html` (standalone HTML export).
+- `slides/` — presentation exports for the current direction (the new proposal deck is not built yet).
+- `archive/v1-impostor-detection/` — frozen snapshot of the first direction (docs, README, CLAUDE.md, v1 proposal deck). Read-only: do not edit, and do not treat it as current. Older log entries in `docs/` that refer to `slides/proposal.*` now live here.
 - Code, data and experiment folders will be added as the project grows; record the layout here when they are.
