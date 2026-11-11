@@ -1,7 +1,7 @@
 # Project Overview
 
 Final project for the course **"Large Language Models and Their Applications"**, Bar-Ilan University.
-Team: Ido Brenner, Oren Yehezkel.
+Team: Ido Brener, Oren Yehezkel.
 
 > The project pivoted on 2026-11-11 (D-012). The previous direction (Hebrew impostor detection) is archived in `archive/v1-impostor-detection/`.
 
