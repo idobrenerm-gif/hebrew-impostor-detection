@@ -7,7 +7,7 @@ Newest entries on top. Format: `## YYYY-MM-DD — Name — short title`, followe
 ## 2026-11-11 — Ido — Pivot to prompt-language detection
 - Presented the v1 proposal (Hebrew impostor detection). Lecturer feedback: intent to impersonate cannot be inferred from text; suggested detecting whether Hebrew LLM output came from a Hebrew prompt or a prompt in another language.
 - Agreed with Oren to pivot (D-012). Decided task structure, prompt languages and no human class (D-013 to D-015).
-- Archived all v1 material in `archive/v1-impostor-detection/` (D-016). Rewrote `docs/PROJECT.md`, `docs/OPEN_QUESTIONS.md`, `README.md` and `CLAUDE.md` for the new direction. Repo rename to `hebrew-prompt-language-detection` pending (Ido, in GitHub settings).
+- Archived all v1 material in `archive/v1-impostor-detection/` (D-016). Rewrote `docs/PROJECT.md`, `docs/OPEN_QUESTIONS.md`, `README.md` and `CLAUDE.md` for the new direction. Renamed the repo to `hebrew-prompt-language-detection` (Ido, in GitHub settings).
 - Next: resolve the open data-generation questions (prompt translation, content control, generators), consider a small pilot, then build the new proposal deck.
 
 ## 2026-11-06 — Ido — Proposal deck PPTX and PDF
